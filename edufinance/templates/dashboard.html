@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Панель пользователя</h1>
+<section class="grid">
+    <article class="card metric">
+        <span>Общий баланс</span>
+        <strong>{{ total_balance }}</strong>
+    </article>
+    <article class="card metric">
+        <span>Количество счетов</span>
+        <strong>{{ accounts|length }}</strong>
+    </article>
+</section>
+
+<section class="card">
+    <h2>Последние операции</h2>
+    {% if transactions %}
+        <table>
+            <thead><tr><th>Дата</th><th>Тип</th><th>Счет</th><th>Сумма</th><th>Категория</th></tr></thead>
+            <tbody>
+            {% for t in transactions %}
+                <tr>
+                    <td>{{ t.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ t.operation_type }}</td>
+                    <td>{{ t.account.name }}</td>
+                    <td>{{ t.amount }}</td>
+                    <td>{{ t.category.name }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Операций пока нет.</p>
+    {% endif %}
+</section>
+{% endblock %}

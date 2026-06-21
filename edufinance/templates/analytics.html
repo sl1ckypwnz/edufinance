@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Аналитика</h1>
+<section class="grid">
+    <article class="card metric"><span>Баланс</span><strong>{{ total_balance }}</strong></article>
+    <article class="card metric"><span>Доходы</span><strong>{{ income_total }}</strong></article>
+    <article class="card metric"><span>Расходы</span><strong>{{ expense_total }}</strong></article>
+</section>
+
+<section class="card">
+    <h2>Расходы по категориям</h2>
+    {% if category_expenses %}
+        <table>
+            <thead><tr><th>Категория</th><th>Сумма</th></tr></thead>
+            <tbody>
+            {% for category, amount in category_expenses.items() %}
+                <tr><td>{{ category }}</td><td>{{ amount }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Недостаточно данных для аналитики.</p>
+    {% endif %}
+</section>
+{% endblock %}

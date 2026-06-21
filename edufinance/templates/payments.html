@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Имитация платежей</h1>
+<section class="card">
+    <h2>Создать учебный платеж</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label>{{ form.account_id.label }} {{ form.account_id() }}</label>
+        <label>{{ form.amount.label }} {{ form.amount() }}</label>
+        <label>{{ form.recipient.label }} {{ form.recipient() }}</label>
+        <label>{{ form.description.label }} {{ form.description(rows=3) }}</label>
+        {{ form.submit(class_="button") }}
+    </form>
+    <p class="hint">Платеж не отправляется во внешние системы. Приложение только проверяет баланс и фиксирует учебный статус.</p>
+</section>
+
+<section class="card">
+    <h2>История платежей</h2>
+    {% if payments %}
+        <table>
+            <thead><tr><th>Дата</th><th>Счет</th><th>Получатель</th><th>Сумма</th><th>Статус</th></tr></thead>
+            <tbody>
+            {% for p in payments %}
+                <tr>
+                    <td>{{ p.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ p.account.name }}</td>
+                    <td>{{ p.recipient }}</td>
+                    <td>{{ p.amount }}</td>
+                    <td><span class="badge {{ p.status }}">{{ p.status }}</span></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Платежей пока нет.</p>
+    {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+    <h1>Вход</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label>{{ form.email.label }} {{ form.email() }}</label>
+        <label>{{ form.password.label }} {{ form.password() }}</label>
+        {{ form.submit(class_="button") }}
+    </form>
+    <p>Нет учетной записи? <a href="{{ url_for('auth.register') }}">Зарегистрироваться</a></p>
+</section>
+{% endblock %}

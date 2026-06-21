@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Операции</h1>
+<section class="card">
+    <h2>Добавить доход или расход</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label>{{ form.account_id.label }} {{ form.account_id() }}</label>
+        <label>{{ form.operation_type.label }} {{ form.operation_type() }}</label>
+        <label>{{ form.category_id.label }} {{ form.category_id() }}</label>
+        <label>{{ form.amount.label }} {{ form.amount() }}</label>
+        <label>{{ form.comment.label }} {{ form.comment(rows=3) }}</label>
+        {{ form.submit(class_="button") }}
+    </form>
+</section>
+
+<section class="card">
+    <h2>История операций</h2>
+    {% if transactions %}
+        <table>
+            <thead><tr><th>Дата</th><th>Тип</th><th>Счет</th><th>Категория</th><th>Сумма</th><th>Комментарий</th></tr></thead>
+            <tbody>
+            {% for t in transactions %}
+                <tr>
+                    <td>{{ t.created_at.strftime('%d.%m.%Y %H:%M') }}</td>
+                    <td>{{ t.operation_type }}</td>
+                    <td>{{ t.account.name }}</td>
+                    <td>{{ t.category.name }}</td>
+                    <td>{{ t.amount }}</td>
+                    <td>{{ t.comment or '—' }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Операций пока нет.</p>
+    {% endif %}
+</section>
+{% endblock %}

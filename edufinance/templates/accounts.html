@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Финансовые счета</h1>
+<section class="card">
+    <h2>Создать счет</h2>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label>{{ form.name.label }} {{ form.name() }}</label>
+        <label>{{ form.currency.label }} {{ form.currency() }}</label>
+        <label>{{ form.initial_balance.label }} {{ form.initial_balance() }}</label>
+        {{ form.submit(class_="button") }}
+    </form>
+</section>
+
+<section class="card">
+    <h2>Мои счета</h2>
+    {% if accounts %}
+        <table>
+            <thead><tr><th>Название</th><th>Валюта</th><th>Баланс</th><th>Создан</th></tr></thead>
+            <tbody>
+            {% for account in accounts %}
+                <tr>
+                    <td>{{ account.name }}</td>
+                    <td>{{ account.currency }}</td>
+                    <td>{{ account.balance }}</td>
+                    <td>{{ account.created_at.strftime('%d.%m.%Y') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Счета еще не созданы.</p>
+    {% endif %}
+</section>
+{% endblock %}

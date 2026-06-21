@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card narrow">
+    <h1>Регистрация</h1>
+    <form method="post">
+        {{ form.hidden_tag() }}
+        <label>{{ form.full_name.label }} {{ form.full_name() }}</label>
+        <label>{{ form.email.label }} {{ form.email() }}</label>
+        <label>{{ form.password.label }} {{ form.password() }}</label>
+        <label>{{ form.password_repeat.label }} {{ form.password_repeat() }}</label>
+        {{ form.submit(class_="button") }}
+    </form>
+</section>
+{% endblock %}
